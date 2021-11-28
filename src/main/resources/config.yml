@@ -10,10 +10,12 @@ discord:
     message: "Hola"
 
 staff-list:
+  permission: "staffchat.list"
   delimiter: ", "
   format: "%server% - (%staffs%)"
 
 server-switch:
+  permission: "staff.switch"
   on-join: |-
     &c%player% ha entrado
     &aPrueba2
