@@ -49,7 +49,7 @@ public class StaffCommand extends Command {
     }
     public static void sendStaffChat(String sender, String message){
         for(ProxiedPlayer staffs : ProxyServer.getInstance().getPlayers()){
-            if(staffs.hasPermission("pandorastaff.read")){
+            if(staffs.hasPermission(getConfig().getString("staff-chat.permission"))){
                 staffs.sendMessage(Utilities.colorString(
                         getConfig().getString("staff-chat.format")
                                 .replace("%player%", sender)
