@@ -20,7 +20,7 @@ public class PlayerJoinListener implements Listener {
         String new_ip = e.getPlayer().getAddress().getHostName();
         String last_ip = getSql().getLastIP(player);
         ProxyServer.getInstance().getPlayers().forEach(p -> {
-            if (p.hasPermission("pandorastaff.join")) {
+            if (p.hasPermission(getConfig().getString("server-switch.permission"))) {
                 p.sendMessage(colorString(PandoraStaff.getConfig().getString("server-switch.on-join").replace("%player%", e.getPlayer().getName())));
             }
         });
@@ -31,8 +31,8 @@ public class PlayerJoinListener implements Listener {
         }
         if (!last_ip.equals(new_ip)) {
             for (ProxiedPlayer staffs : ProxyServer.getInstance().getPlayers()) {
-                if (staffs.hasPermission("staff.log")) {
-                    staffs.sendMessage(colorString(getConfig().getString("server-switch-on-new-join")
+                if (staffs.hasPermission(getConfig().getString("server-switch.permission"))) {
+                    staffs.sendMessage(colorString(getConfig().getString("server-switch.on-new-join")
                             .replace("%player%", player)
                             .replace("%lastip%", last_ip)
                             .replace("%newip%", new_ip)));
