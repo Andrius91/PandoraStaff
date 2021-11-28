@@ -38,7 +38,7 @@ public class List implements CommandManager {
             for(ServerInfo svs: proxy.values()){
                 StringJoiner joiner = new StringJoiner(getConfig().getString("staff-list.delimiter"));
                 for (ProxiedPlayer proxiedPlayer : svs.getPlayers()) {
-                    if (proxiedPlayer.hasPermission("pandorastaff.list")) {
+                    if (proxiedPlayer.hasPermission(getConfig().getString("staff-list.permission"))) {
                         joiner.add(proxiedPlayer.getName());
                     }
                 }
