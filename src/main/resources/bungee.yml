@@ -1,0 +1,4 @@
+name: PandoraStaff
+version: '${project.version}'
+main: team.yogurt.PandoraStaff
+description: A bungee staff plugin

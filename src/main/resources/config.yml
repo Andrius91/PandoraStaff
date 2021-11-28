@@ -1,0 +1,19 @@
+commands:
+  aliases:
+    - "sc"
+    - "staffc"
+discord:
+  bot-token: "OTEzNjM4MDI3MDMxNjA5NDE2.YaBZuA.UNoErRnkCLrKHLjrynTeiCLruA0"
+  channel-id: "913637065084780588"
+  status:
+    type: LISTENING
+    message: "Hola"
+server-switch:
+  on-join: |-
+    &cPrueba
+    &aPrueba2
+  on-change-server:
+staff-chat:
+  permission:
+  usage:
+  format:
