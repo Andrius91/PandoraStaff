@@ -5,6 +5,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ServerConnectEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
+import team.yogurt.PandoraStaff;
 import team.yogurt.Utilities;
 
 public class ServerSwitchListener implements Listener {
@@ -16,7 +17,10 @@ public class ServerSwitchListener implements Listener {
             String from = e.getPlayer().getServer().getInfo().getName();
             String to = e.getTarget().getName();
             for(ProxiedPlayer staffs : ProxyServer.getInstance().getPlayers()){
-                staffs.sendMessage(Utilities.colorString("&a"+ p+ " ha cambiado de "+ from + " - " +to));
+                staffs.sendMessage(Utilities.colorString(PandoraStaff.getConfig().getString("server-switch.on-change-server")
+                        .replace("%player%", p.getName())
+                        .replace("%from%", from)
+                        .replace("%to%", to)));
             }
         }
     }

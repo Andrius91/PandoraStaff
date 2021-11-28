@@ -5,9 +5,11 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
-import team.yogurt.Utilities;
+import team.yogurt.PandoraStaff;
 
+import static team.yogurt.PandoraStaff.getConfig;
 import static team.yogurt.PandoraStaff.getSql;
+import static team.yogurt.Utilities.colorString;
 
 public class PlayerJoinListener implements Listener {
 
@@ -15,19 +17,28 @@ public class PlayerJoinListener implements Listener {
     public void onJoin(PostLoginEvent e) {
         String player = e.getPlayer().getName();
         String uuid = e.getPlayer().getUniqueId().toString();
-        String ip = e.getPlayer().getAddress().getHostName();
+        String new_ip = e.getPlayer().getAddress().getHostName();
         String last_ip = getSql().getLastIP(player);
-        if(!getSql().userExist(player)){
-            getSql().createUser(player, uuid, ip);
+        ProxyServer.getInstance().getPlayers().forEach(p -> {
+            if (p.hasPermission("pandorastaff.join")) {
+                p.sendMessage(colorString(PandoraStaff.getConfig().getString("server-switch.on-join").replace("%player%", e.getPlayer().getName())));
+            }
+        });
+
+        if (!getSql().userExist(player)) {
+            getSql().createUser(player, uuid, new_ip);
             return;
         }
-        if(!last_ip.equals(ip)) {
+        if (!last_ip.equals(new_ip)) {
             for (ProxiedPlayer staffs : ProxyServer.getInstance().getPlayers()) {
-                if(staffs.hasPermission("staff.log")) {
-                    staffs.sendMessage(Utilities.colorString("&c" + player + " ha entrado con otra dirección IP " + last_ip + " - " + ip));
+                if (staffs.hasPermission("staff.log")) {
+                    staffs.sendMessage(colorString(getConfig().getString("server-switch-on-new-join")
+                            .replace("%player%", player)
+                            .replace("%lastip%", last_ip)
+                            .replace("%newip%", new_ip)));
                 }
             }
-            getSql().createUser(player, uuid, ip);
+            getSql().createUser(player, uuid, new_ip);
         }
 
     }

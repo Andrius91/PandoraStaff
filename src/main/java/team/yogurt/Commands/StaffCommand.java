@@ -11,10 +11,12 @@ import team.yogurt.Utilities;
 
 import java.util.ArrayList;
 
+import static team.yogurt.PandoraStaff.getConfig;
+
 public class StaffCommand extends Command {
     ArrayList<CommandManager> commands = new ArrayList<>();
     public StaffCommand(String... aliases) {
-        super("staffchat", "pandorastaff.use", aliases);
+        super("staffchat", getConfig().getString("staff-chat.permission"), aliases);
         commands.add(new Toggle());
         commands.add(new List());
     }
@@ -25,28 +27,35 @@ public class StaffCommand extends Command {
     public void execute(CommandSender sender, String[] args) {
         if(sender.hasPermission(super.getPermission())){
             if (args.length <=0) {
-                sender.sendMessage(Utilities.colorString("&cUse: /sc <message>"));
+                sender.sendMessage(Utilities.colorString(getConfig().getString("staff-chat.usage")));
             }else {
                 for (CommandManager cmd : getCommands()) {
-                    if (args[0].equalsIgnoreCase(cmd.getName())) {
+                    if (args[0].equals(cmd.getName())) {
                         cmd.perform(sender, args);
                         return;
                     }
                 }
-                StringBuilder reason = new StringBuilder();
+                StringBuilder message = new StringBuilder();
                 for (String arg : args) {
-                    reason.append(arg).append(" ");
+                    message.append(arg).append(" ");
                 }
-                for(ProxiedPlayer staffs : ProxyServer.getInstance().getPlayers()){
-                    if(staffs.hasPermission("pandorastaff.read")){
-                        staffs.sendMessage(Utilities.colorString("&cSTAFF " + sender.getName()+ "&a: " +reason.toString().trim()));
-                    }
-                }
+                sendStaffChat(sender.getName(), message.toString().trim());
             }
 
         }
     }
     private ArrayList<CommandManager> getCommands() {
         return commands;
+    }
+    public static void sendStaffChat(String sender, String message){
+        for(ProxiedPlayer staffs : ProxyServer.getInstance().getPlayers()){
+            if(staffs.hasPermission("pandorastaff.read")){
+                staffs.sendMessage(Utilities.colorString(
+                        getConfig().getString("staff-chat.format")
+                                .replace("%player%", sender)
+                                .replace("%message%", message)
+                ));
+            }
+        }
     }
 }

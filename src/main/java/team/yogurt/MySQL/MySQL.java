@@ -40,16 +40,16 @@ public class MySQL extends DatabaseManager {
 
     public void createUser(String player, String uuid, String ip){
         try{
-            if(!userExist(player)){
+            if (userExist(player)) {
+                ps = this.getConnection().prepareStatement(UPDATE_USER.toString());
+                ps.setString(1, ip);
+                ps.setString(2, player);
+            } else {
                 ps = this.getConnection().prepareStatement(CREATE_USER.toString());
                 ps.setString(1, player);
                 ps.setString(2, uuid);
                 ps.setString(3, ip);
                 ps.setString(4, "true");
-            }else{
-                ps = this.getConnection().prepareStatement(UPDATE_USER.toString());
-                ps.setString(1, ip);
-                ps.setString(2, player);
             }
             ps.executeUpdate();
 

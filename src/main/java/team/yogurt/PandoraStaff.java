@@ -6,6 +6,7 @@ import net.md_5.bungee.api.plugin.PluginManager;
 import net.md_5.bungee.config.Configuration;
 import team.yogurt.Commands.StaffCommand;
 import team.yogurt.Discord.Discord;
+import team.yogurt.Listeners.ChatListener;
 import team.yogurt.Listeners.PlayerJoinListener;
 import team.yogurt.Listeners.ServerSwitchListener;
 import team.yogurt.Managers.ConfigManager;
@@ -56,6 +57,7 @@ public class PandoraStaff extends Plugin {
         PluginManager instance = getProxy().getPluginManager();
         instance.registerListener(this, new PlayerJoinListener());
         instance.registerListener(this, new ServerSwitchListener());
+        instance.registerListener(this, new ChatListener());
     }
 
     private void registerCommands(){

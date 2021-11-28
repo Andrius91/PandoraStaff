@@ -2,6 +2,7 @@ package team.yogurt.Commands.SubCommands;
 
 import net.md_5.bungee.api.CommandSender;
 import team.yogurt.Managers.CommandManager;
+import team.yogurt.PandoraStaff;
 
 import static team.yogurt.PandoraStaff.getSql;
 import static team.yogurt.Utilities.colorString;
@@ -26,14 +27,12 @@ public class Toggle implements CommandManager {
     public void perform(CommandSender sender, String[] args) {
         if(args.length == 1){
             if(getSql().isToggled(sender.getName())){
-                sender.sendMessage(colorString("&cHas desactivado el staffchat"));
+                sender.sendMessage(colorString(PandoraStaff.getConfig().getString("staff-chat.toggle.disable")));
                 getSql().setToggle(sender.getName(), "false");
             }else{
-                sender.sendMessage(colorString("&aHas activado el staffchat"));
+                sender.sendMessage(colorString(PandoraStaff.getConfig().getString("staff-chat.toggle.enable")));
                 getSql().setToggle(sender.getName(), "true");
             }
-        }else if (args.length > 1) {
-            sender.sendMessage(colorString("&cPlease, use " + getSyntax()));
         }
     }
 }

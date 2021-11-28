@@ -8,12 +8,28 @@ discord:
   status:
     type: LISTENING
     message: "Hola"
+
+staff-list:
+  delimiter: ", "
+  format: "%server% - (%staffs%)"
+
 server-switch:
   on-join: |-
-    &cPrueba
+    &c%player% ha entrado
     &aPrueba2
-  on-change-server:
+  on-new-join: |-
+    &a
+    &a%player% ha entrando con nueva nueva ip (%lastip% - %newip%)
+    &a
+  on-change-server: |-
+    &a
+    &c%player% &cha cambiado de %from% a %to%
+    &a
+
 staff-chat:
-  permission:
-  usage:
-  format:
+  toggle:
+    enable: "&aHas togleado el staffchat"
+    disable: "&cHas destogleado el staffchat"
+  permission: "staffchat.use"
+  usage: "/sc <message | or subcommands>"
+  format: "&cSTAFFCHAT | &5%player%&7: &f%message%"
