@@ -13,12 +13,12 @@ public class ChatListener implements Listener {
     public void onSendMessage(ChatEvent e){
         String message = e.getMessage();
         ProxiedPlayer sender = (ProxiedPlayer) e.getSender();
-        String[] command = e.getMessage().split(":");
+        String[] command = e.getMessage().split(" ");
         if(PandoraStaff.getSql().isToggled(sender.getName()) && !e.isCommand()){
             StaffCommand.sendStaffChat(sender.getName(), message);
             e.setCancelled(true);
         }
-        if (e.isCommand() && command[0].contains("/")){
+        if (e.isCommand() && command[0].contains(":")){
             sender.sendMessage(Utilities.colorString("&cThe command not contain ':' character"));
             e.setCancelled(true);
         }

@@ -1,5 +1,5 @@
 # PandoraStaff
-A Minercy Original Plugin
+A Simple Plugin
 
 #Permissions:
 
