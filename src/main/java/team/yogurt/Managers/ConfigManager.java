@@ -19,7 +19,7 @@ public class ConfigManager {
             PandoraStaff.getInstance().getDataFolder().mkdir();
         }
     }
-    public static Configuration getFile(String filename){
+    public static Configuration getConf(String filename){
         File file = new File(PandoraStaff.getInstance().getDataFolder(), filename);
         Configuration config = null;
         if (!file.exists()){
@@ -39,5 +39,20 @@ public class ConfigManager {
             e.printStackTrace();
         }
         return config;
+    }
+    
+    public static File getFile(String filename){
+        File file = new File(PandoraStaff.getInstance().getDataFolder(), filename);
+        if (!file.exists()){
+            try {
+                InputStream in = PandoraStaff.getInstance().getResourceAsStream(filename);
+                Files.copy(in, file.toPath());
+                PandoraStaff.getInstance().getLogger().info(Utilities.color(filename + " &aregistered!"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return file;
     }
 }

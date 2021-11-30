@@ -47,10 +47,10 @@ public class PandoraStaff extends Plugin {
         return discord;
     }
     public static Configuration getConfig(){
-        return ConfigManager.getFile("config.yml");
+        return ConfigManager.getConf("config.yml");
     }
     public static Configuration getMySQL(){
-        return ConfigManager.getFile("mysql.yml");
+        return ConfigManager.getConf("mysql.yml");
     }
 
     private void registerListeners(){
