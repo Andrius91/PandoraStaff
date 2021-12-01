@@ -24,21 +24,23 @@ public class PlayerJoinListener implements Listener {
                 p.sendMessage(colorString(PandoraStaff.getConfig().getString("server-switch.on-join").replace("%player%", e.getPlayer().getName())));
             }
         });
-
-        if (!getSql().userExist(player)) {
-            getSql().createUser(player, uuid, new_ip);
-            return;
-        }
-        if (!last_ip.equals(new_ip)) {
-            for (ProxiedPlayer staffs : ProxyServer.getInstance().getPlayers()) {
-                if (staffs.hasPermission(getConfig().getString("server-switch.permission"))) {
-                    staffs.sendMessage(colorString(getConfig().getString("server-switch.on-new-join")
-                            .replace("%player%", player)
-                            .replace("%lastip%", last_ip)
-                            .replace("%newip%", new_ip)));
-                }
+        if(e.getPlayer().hasPermission(getConfig().getString("staffchat.use"))){
+            if (!getSql().userExist(player)) {
+                getSql().createUser(player, uuid, new_ip);
+                return;
             }
-            getSql().createUser(player, uuid, new_ip);
+            if (!last_ip.equals(new_ip)) {
+                for (ProxiedPlayer staffs : ProxyServer.getInstance().getPlayers()) {
+                    if (staffs.hasPermission(getConfig().getString("server-switch.permission"))) {
+                        staffs.sendMessage(colorString(getConfig().getString("server-switch.on-new-join")
+                                .replace("%player%", player)
+                                .replace("%lastip%", last_ip)
+                                .replace("%newip%", new_ip)));
+                    }
+                }
+                getSql().createUser(player, uuid, new_ip);
+        }
+
         }
 
     }

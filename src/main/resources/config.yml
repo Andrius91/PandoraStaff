@@ -1,4 +1,5 @@
 commands:
+  block-message: "The commands no must contains ':' character"
   aliases:
     - "sc"
     - "staffc"
